@@ -1,34 +1,38 @@
-#!/usr/bin/env zsh
 # -----------------------------------------------------------------------------
 #
-#      Program: cdb.zsh (cd bookmarking for zsh)
+#       Program: cdbk.zsh (cd bookmarking for zsh)
 #
-#        Usage: cdb {-a,-r,-d} <name> [path] (run with no paramaters for info)
+#         Usage: cdbk {-a,-r,-d} <name> [path] (run with no paramaters for info)
 #
-# Requirements: Needs to be sourced from a zsh startup file, or use oh-my-zsh
+#  Requirements: Needs to be sourced from a zsh startup file, or use oh-my-zsh
 # 
-#   Decription: cdb() is a simple zsh function to make management of zsh
-#               named directories easier.  It keeps all named directoried in a
-#               file and uses grep, sed, echo, and perl to parse and modify 
-#               this file in order to add, change or remove bookmarks.
+#    Revision #: 1.0
+# Last modified: 2014-08-08 13:23
 #
-#               Because it uses the zsh named directory function, full zsh path
-#               completion is possible.  Further, very simple cdb completion is
-#               included to make replacing and deleting bookmarks easier.
+#    Decription: cdbk() is a simple zsh function to make management of zsh
+#                named directories easier.  It keeps all named directories in a
+#                file and uses grep, sed, echo, and perl to parse and modify 
+#                this file in order to add, change or remove bookmarks.
+#        
+#                Because it uses the zsh named directory function, full zsh path
+#                completion is possible.  Further, very simple cdbk completion is
+#                included to make replacing and deleting bookmarks easier.
 #
-#               This program was heavily inspired by Stan Angeloff's function 
-#               of the same name found here:
-#               http://blog.angeloff.name/post/1027007406/cd-with-bookmarks-and-auto-completion-for-zsh
+#                This program was heavily inspired by Stan Angeloff's function 
+#                of the same name found here:
+#                http://blog.angeloff.name/post/1027007406/cd-with-bookmarks-and-auto-completion-for-zsh
 #
-#         Bugs: None that I know of
+#                This file also provides the function folder_name(), which returns
+#                a formatted list of the names of the current folder for use in 
+#                a prompt. To include the folder name in your prompt use e.g.:
+#                export PROMPT=$PROMPT $(folder_name)
 #
-#   Created by: Mike Dacre 
-#   Created on: 19-11-11
+#          Bugs: None that I know of
 #
-#   Revision #: 0.9.6-beta
-#      Updated: 23-11-11 10:11:27
+#    Created by: Mike Dacre 
+#    Created on: 19-11-11
 #
-#      License: MIT License - Open Source. Use as you wish
+#       License: MIT License - Open Source. Use as you wish
 #    
 # -----------------------------------------------------------------------------
 
@@ -44,7 +48,7 @@ fi
 # ----------------------
 # Main Function
 # ----------------------
-function cdb () {
+function cdbk () {
   source $ZSH_BOOKMARKS;
 
   # Create local variables for function and global bkmk functions
@@ -59,11 +63,11 @@ function cdb () {
 
   # Define usage
   local USAGE="-------------------------------------------------------------------------------
-     cdb is a simple management tool for the built in zsh named directories
+     cdbk is a simple management tool for the built in zsh named directories
 
-   cdb -a <name> [<path>] : Create bookmark (uses current dir if no path)
-   cdb -r <name> [<path>] : Replace bookmark (uses current dir if no path)
-   cdb -d <name>          : Delete bookmark\n\n";
+   cdbk -a <name> [<path>] : Create bookmark (uses current dir if no path)
+   cdbk -r <name> [<path>] : Replace bookmark (uses current dir if no path)
+   cdbk -d <name>          : Delete bookmark\n\n";
 
   # Check first if bookmark file exists
   if [[ ! -e $ZSH_BOOKMARKS ]]; then
@@ -110,7 +114,7 @@ function cdb () {
 
         # Check that name isn't already taken
         if [ $BKMKNAME ]; then
-          printf "Bookmark %s is already taken (at %s), please use cdb -r %s <PATH> to replace.\n" $2 $BKMKPATH $2;
+          printf "Bookmark %s is already taken (at %s), please use cdbk -r %s <PATH> to replace.\n" $2 $BKMKPATH $2;
         else
 
           # Check that path provided is actually a valid directory
@@ -197,9 +201,9 @@ function cdb () {
     # If first argument isn't -a or -d then print help
     else
       printf "First argument must be either -a or -r or -d\n";
-      printf "To add a bookmark use cdb -a <name> <path>\n";
-      printf "To replace a bookmark use cdb -r <name> <path>\n";
-      printf "To delete a bookmark, use cdb -d <name>\n";
+      printf "To add a bookmark use cdbk -a <name> <path>\n";
+      printf "To replace a bookmark use cdbk -r <name> <path>\n";
+      printf "To delete a bookmark, use cdbk -d <name>\n";
       printf "Current bookmarks:\n\n";
       print -aC 2 ${(kv)CURBKMKS} | sed 's/^/     /';
     fi
@@ -210,9 +214,25 @@ function cdb () {
 # ----------------------
 # Auto-complete function
 # ----------------------
-function _cdb() {
-  reply=(`cat "$ZSH_BOOKMARKS" | sed -e 's#^hash -d \(.*\)=.*$#\1#g'`);
+function _cdbk() {
+  reply=($(cat "$ZSH_BOOKMARKS" | sed -e 's#^hash -d \(.*\)=.*$#\1#g') $(cat "$HOME/.zshrc" | grep "^hash -d" | sed -e 's#^hash -d \(.*\)=.*$#\1#g'));
 }
 
-compctl -K _cdb cdb
+compctl -K _cdbk cdbk
+
+# ---------------------------------------
+# folder_name function for custom prompt
+# ---------------------- ----------------
+function folder_name {
+  FOLDERNAME=$(grep -e "hash -d.*=\"*\'*$PWD\"*\'*"$ {"$ZSH_BOOKMARKS","$HOME"/.zshrc} | sed 's#^.*hash -d \([^=]*\)=.*$#~\1#' | xargs echo);
+  if [ $FOLDERNAME ]; then
+    echo "${PR_LIGHT_CYAN}(${PR_LIGHT_WHITE}$FOLDERNAME${PR_LIGHT_CYAN})%{${reset_color}%}";
+  elif [[ "$PWD" == "$MYZSH" ]]; then
+    echo "${PR_LIGHT_CYAN}(${PR_LIGHT_WHITE}~zsh${PR_LIGHT_CYAN})%{${reset_color}%}";
+  elif [[ "$PWD" == "$HOME/.vim" ]]; then
+    echo "${PR_LIGHT_CYAN}(${PR_LIGHT_WHITE}~vim${PR_LIGHT_CYAN})%{${reset_color}%}";
+  else
+    echo "";
+  fi
+}
 
