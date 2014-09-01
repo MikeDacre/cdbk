@@ -21,7 +21,7 @@ autocompletion will work too.
 This file also provides the function ``folder_name()``, which returns
 a formatted list of the names of the current folder for use in 
 a prompt. To include the folder name in your prompt use e.g.:
-export ``PROMPT=$PROMPT $(folder_name)``
+``export PROMPT=$PROMPT $(folder_name)``
 
 Very simple cdbk completion is included to make replacing and 
 deleting bookmarks easier.
@@ -40,7 +40,9 @@ Usage: cdbk {-a,-r,-d,-l} <name> [path] (run with no paramaters for info)
 Requirements: Needs to be sourced from a zsh startup file, or use oh-my-zsh
 
 Created by: Mike Dacre 
+
 Created on: 19-11-11
+
 Version: 1.1
 
 License: MIT License - Open Source. Use as you wish
