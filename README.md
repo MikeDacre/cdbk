@@ -12,9 +12,9 @@ directory ``/Users/me/Work/Project13/Samples/FromEster/July/``
 and that directory had many subdirectories including the subdirectory
 ``./Revision6/pictures``, you could easily bookmark the parent directory
 with the command:
-``
-    cdbk -a ejul /Users/me/Work/Project13/Samples/FromEster/July/
-``
+```
+cdbk -a ejul /Users/me/Work/Project13/Samples/FromEster/July/
+```
 Then, to cd to the subdirectory, just type ``cd ~ejul/Revision6/pictures``,
 autocompletion will work too.
 
@@ -30,12 +30,13 @@ This program was heavily inspired by Stan Angeloff's function
 of the same name found here:
 http://blog.angeloff.name/post/1027007406/cd-with-bookmarks-and-auto-completion-for-zsh
 
+```
 Usage: cdbk {-a,-r,-d,-l} <name> [path] (run with no paramaters for info)
        -a: Create bookmark (uses current dir if no path)
        -r: Replace bookmark (uses current dir if no path)
        -d: Delete bookmark
        -l: List all currently enabled bookmarks
-
+```
 Requirements: Needs to be sourced from a zsh startup file, or use oh-my-zsh
 
 Created by: Mike Dacre 
