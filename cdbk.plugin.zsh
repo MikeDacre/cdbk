@@ -1,5 +1,5 @@
 # cdbk.plugin.zsh (cd bookmarking for zsh)
-# Last modified: 2014-08-31 21:12
+# Last modified: 2014-08-31 21:25
 
 # Define location of bookmark file and source it every time this file is sourced
 ZSH_BOOKMARKS="$HOME/.zshbookmarks";
@@ -20,10 +20,8 @@ function cdbk1 () {
   local BKMKNAME;
   local BKMKPATH;
   local MYPATH;
-  CURBKMKS=(`grep -e "^hash -d" $ZSH_BOOKMARKS | sed 's#hash -d ##' | sed 's#=\(.*\)# \1#' `)
-  GLBLBKMKS=(`grep -e "^ *hash -d" $HOME/.zshrc | sed 's#hash -d ##' | sed 's#=\(.*\)# \1#' `)
-
-  local GLBLTEST=GLBLBKMKS;
+  CURBKMKS=(`grep -e "^hash -d" $ZSH_BOOKMARKS | sed 's#hash -d ##' | sed 's#=\(.*\)# \1#'`)
+  GLBLBKMKS=(`grep -e "^ *hash -d" $HOME/.zshrc1 | sed 's#hash -d ##' | sed 's#=\(.*\)# \1#'`)
 
   # Define usage
   local USAGE="-------------------------------------------------------------------------------
@@ -44,8 +42,8 @@ function cdbk1 () {
     # Display all currently enabled bookmarks
     printf "$USAGE   Current bookmarks:\n";
     print -aC 2 ${(kv)CURBKMKS} | sed 's/^/     /' | sort;
-    if [ $GLBLTEST ]; then
-      printf "\n   Global Bookmarks:\n";
+    if [[ -n ${GLBLBKMKS} ]]; then
+      printf "\n   Global Bookmarks: (from ~/.zshrc)\n";
       print -aC 2 ${(kv)GLBLBKMKS} | sed 's/^/     /' | sort;
     fi
     printf "\n--------------------------------------------------------------------------------\n";
