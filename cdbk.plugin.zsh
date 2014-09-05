@@ -1,5 +1,5 @@
 # cdbk.plugin.zsh (cd bookmarking for zsh)
-# Last modified: 2014-09-05 12:03
+# Last modified: 2014-09-05 12:05
 
 # Define location of bookmark file and source it every time this file is sourced
 ZSH_BOOKMARKS="$HOME/.zshbookmarks";
@@ -189,7 +189,7 @@ compctl -K _cdbk cdbk
 
 # ---------------------------------------
 # folder_name function for custom prompt
-# ---------------------- ----------------
+# ---------------------------------------
 function folder_name {
   FOLDERNAME=$(grep -e "hash -d.*=\"*\'*$PWD\"*\'*"$ {"$ZSH_BOOKMARKS","$HOME"/.zshrc} | sed 's#^.*hash -d \([^=]*\)=.*$#~\1#' | xargs echo);
   if [ $FOLDERNAME ]; then
@@ -203,3 +203,8 @@ function folder_name {
   fi
 }
 
+# ---------------------------------------
+# Aliases
+# ---------------------------------------
+alias cdba='cdbk -a'
+alias cddl='cdbk -l'
