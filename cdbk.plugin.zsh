@@ -1,5 +1,5 @@
 # cdbk.plugin.zsh (cd bookmarking for zsh)
-# Last modified: 2014-09-05 12:05
+# Last modified: 2014-09-05 12:14
 
 # Define location of bookmark file and source it every time this file is sourced
 ZSH_BOOKMARKS="$HOME/.zshbookmarks";
@@ -207,4 +207,4 @@ function folder_name {
 # Aliases
 # ---------------------------------------
 alias cdba='cdbk -a'
-alias cddl='cdbk -l'
+alias cdbl='cdbk -l'
