@@ -54,7 +54,7 @@ If you're using [Antigen](github.com/zsh-users/antigen), just add `antigen bundl
 
 ## [Zgen](tarjoilija/zgen)
 
-If you're using [Zgen](tarjoilija/zgen), add `zgen load rbirnie/oh-my-zsh-nova` to your `.zshrc` file where you're loading your other zsh plugins.
+If you're using [Zgen](tarjoilija/zgen), add `zgen load MikeDacre/cdbk` to your `.zshrc` file where you're loading your other zsh plugins.
 
 Created by: Mike Dacre 
 
