@@ -39,6 +39,23 @@ Usage: cdbk {-a,-r,-d,-l} <name> [path] (run with no paramaters for info)
 ```
 Requirements: Needs to be sourced from a zsh startup file, or use oh-my-zsh
 
+# Installation
+
+## [Antigen](github.com/zsh-users/antigen)
+
+If you're using [Antigen](github.com/zsh-users/antigen), just add `antigen bundle MikeDacre/cdbk` to your `.zshrc` file where you're loading your other zsh plugins.
+
+## [Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh)
+
+1. `mkdir -p ~/oh-my-zsh/custom/plugins`
+2. `cd ~/oh-my-zsh/custom/plugins`
+3. `git clone git@github.com:MikeDacre/cdbk.git`
+4. `echo "plugins+=(cdbk)" >> ~/.zshrc`
+
+## [Zgen](tarjoilija/zgen)
+
+If you're using [Zgen](tarjoilija/zgen), add `zgen load rbirnie/oh-my-zsh-nova` to your `.zshrc` file where you're loading your other zsh plugins.
+
 Created by: Mike Dacre 
 
 Created on: 19-11-11
