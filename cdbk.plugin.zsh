@@ -151,9 +151,9 @@ function cdbk () {
                     perl -pi -e "s#^hash -d ${2}=.*[\n\r]+##g" ${ZSH_BOOKMARKS}
                     unhash -d ${2}
                     printf "Deleted %s\n" ${2}
-                    break;
-            [Nn]* ) printf "Did not delete %s\n" ${2}; break;
-                * ) echo "Please answer yes or no.";
+                    break;;
+            [Nn]* ) printf "Did not delete %s\n" ${2}; break;;
+                * ) echo "Please answer yes or no.";;
           esac
         done
       else
